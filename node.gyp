@@ -456,7 +456,7 @@
           ],
         }],
         [ 'OS=="freebsd" or OS=="linux"', {
-          'ldflags': [ '-Wl,-z,noexecstack',
+          'ldflags': [ '-Wl,-z,noexecstack,--allow-multiple-definition',
                        '-Wl,--whole-archive <(V8_BASE)',
                        '-Wl,--no-whole-archive' ]
         }],
