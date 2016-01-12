@@ -37,6 +37,7 @@ set build_release=
 set enable_vtune_arg=
 set configure_flags=
 set build_addons=
+set enable_shared=
 
 :next-arg
 if "%1"=="" goto args-done
@@ -76,6 +77,7 @@ if /i "%1"=="intl-none"     set i18n_arg=%1&goto arg-ok
 if /i "%1"=="download-all"  set download_arg="--download=all"&goto arg-ok
 if /i "%1"=="ignore-flaky"  set test_args=%test_args% --flaky-tests=dontcare&goto arg-ok
 if /i "%1"=="enable-vtune"  set enable_vtune_arg=1&goto arg-ok
+if /i "%1"=="shared"        set enable_shared="--enable-shared"&goto arg-ok
 
 echo Warning: ignoring invalid command line option `%1`.
 
@@ -182,8 +184,8 @@ goto run
 if defined noprojgen goto msbuild
 
 @rem Generate the VS project.
-echo configure %configure_flags% --dest-cpu=%target_arch% --tag=%TAG%
-python configure %configure_flags% --dest-cpu=%target_arch% --tag=%TAG%
+echo configure %configure_flags% --dest-cpu=%target_arch% --tag=%TAG% %enable_shared%
+python configure %configure_flags% --dest-cpu=%target_arch% --tag=%TAG% %enable_shared%
 if errorlevel 1 goto create-msvs-files-failed
 if not exist node.sln goto create-msvs-files-failed
 echo Project files generated.
