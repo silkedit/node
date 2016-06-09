@@ -1349,7 +1349,7 @@
                   ['component=="shared_library"', {
                     'RuntimeLibrary': '2',  #/MD
                   }, {
-                    'RuntimeLibrary': '0',  #/MT
+                    'RuntimeLibrary': '2',  # Use /MD even if component is static_library to build node.dll with static v8
                   }],
                 ],
               },
